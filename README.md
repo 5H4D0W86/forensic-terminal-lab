@@ -1,55 +1,150 @@
-# 🔍 Terminal-Based Digital Forensics Lab (AWS + Linux + Bash)
+# Terminal-Based Digital Forensics Evidence Intake Tool
 
-This project is a custom-built, cloud-based digital forensics lab designed to streamline and automate the intake, organization, hashing, and secure storage of digital evidence — all from the Linux terminal. No GUI. No mouse clicks. 100% terminal-driven.
-
-Built to simulate real-world forensic workflows in environments that demand reliability, auditability, and scale.
+This project is a terminal-driven digital evidence intake system designed for digital forensics labs. Initially created using Bash on AWS EC2, it has since been rebuilt in Python for local execution, improving compatibility, maintainability, and cross-platform scalability. It uses the AWS SDK (`boto3`) to upload files securely to an S3 bucket.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Features
 
-- ✅ Bash-based case intake & directory generation
-- ✅ SHA256 hashing of all evidence files for integrity verification
-- ✅ Timestamped chain-of-custody logs
-- ✅ Secure uploads to Amazon S3 from the EC2 CLI
-- ✅ Cloud-hosted on AWS EC2 (Amazon Linux 2023)
-- ✅ IAM integration for permissioned, auditable AWS CLI usage
-- ✅ Project structured and operated from the terminal — no GUI involved
-
----
-
-## 🛠 Tools & Technologies
-
-- **AWS EC2** – Linux instance for the terminal-based lab
-- **Amazon S3** – Cloud storage for digital evidence files
-- **AWS CLI** – Command line interface to interact with AWS from the server
-- **IAM** – Secured access credentials for AWS automation
-- **Bash** – Scripting language for automating forensic tasks
-- **Linux file system** – For organizing case evidence and metadata
-- **SHA256** – Used to hash and verify the integrity of all digital evidence
+- Prompted case intake (case number, investigator, suspect, victim, crime type)
+- Structured folder creation for digital evidence
+- SHA256 hashing for evidence integrity
+- Automatic upload of evidence and hash files to Amazon S3
+- Runs entirely in the terminal using Python 3
+- Cross-platform (Windows, macOS, Linux)
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Technologies Used
 
-Example case directory:
-
-Each case folder is auto-generated via terminal prompts and includes:
-- Evidence folder
-- Hashes for each file (SHA256)
-- Investigator info log (date, case number, crime type)
-- Chain-of-custody records
+- Python 3.8+
+- AWS S3 (for storage)
+- `boto3` (AWS SDK for Python)
+- `hashlib`, `os`, `getpass`, `boto3`
 
 ---
 
-## 🧪 Example Commands
+## 🧪 Sample Folder Structure
+
+```
+forensics/
+└── case_001/
+    ├── evidence/
+    │   └── evidence.txt
+    ├── hashes/
+    │   └── evidence.sha256
+    └── logs/
+        └── case_info.txt
+```
+
+---
+
+## 📦 Installation
+
+1. **Clone this repo:**
+   ```bash
+   git clone https://github.com/yourusername/forensics-lab-intake.git
+   cd forensics-lab-intake
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install boto3
+   ```
+
+3. **Set up your AWS credentials:**
+   - Option 1 (recommended):
+     ```bash
+     aws configure
+     ```
+   - Option 2 (set env vars):
+     ```bash
+     set AWS_ACCESS_KEY_ID=your_access_key
+     set AWS_SECRET_ACCESS_KEY=your_secret_key
+     set AWS_DEFAULT_REGION=us-east-1
+     ```
+
+---
+
+## ▶️ Usage
+
+Run the script in the terminal:
 
 ```bash
-# Create a new case from a script
-./create_case.sh
+python "PD Forensic Lab.py"
+```
 
-# Hash a file
-sha256sum ~/forensics/case_004/evidence/iphone_dump.txt > ~/forensics/case_004/hashes/iphone_dump.sha256
+You will be prompted to enter:
+- Case Number
+- Investigator Name
+- Victim Name
+- Suspect Name
+- Crime Type
+- AWS Access Key & Secret (if not configured)
 
-# Upload to S3
-aws s3 cp ~/forensics/case_004/evidence/iphone_dump.txt s3://your-bucket-name/case_004/evidence/
+The script will:
+- Create the folder structure
+- Save the evidence file
+- Create a SHA256 hash of the file
+- Upload both files to the designated S3 bucket
+
+---
+
+## 🧠 Why Python Over Bash?
+
+- **Cross-platform compatibility** (especially with Windows systems)
+- **Easier to scale** into web apps or integrated forensic platforms
+- **Cleaner, more readable code**
+- Direct access to AWS services using `boto3`
+
+---
+
+## 🔐 Security & Best Practices
+
+- Avoid hardcoding AWS credentials — use environment variables or IAM roles (if using EC2)
+- SHA256 hashing ensures evidence integrity before upload
+- Consider adding audit logging and logging to CloudTrail for production use
+
+---
+
+## 📈 Future Roadmap
+
+- Build GUI using Flask or Tkinter
+- Add database support (e.g. SQLite or DynamoDB) for indexing case metadata
+- Chain-of-custody digital signing
+- Full web dashboard for upload, search, and review
+
+---
+
+## 📷 Screenshots
+
+> Insert screenshots here
+
+- Terminal prompt for case input
+- Folder structure after execution
+- S3 bucket showing successful file upload
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+## 🙏 Acknowledgements
+
+- Built as a proof-of-concept to modernize forensic evidence intake
+- Guided by hands-on experimentation and mentorship from experienced engineers
+
+---
+
+## 🌐 Author
+
+Jared Rollins — [LinkedIn Profile](https://www.linkedin.com/in/jared-r-71b71a233/)
