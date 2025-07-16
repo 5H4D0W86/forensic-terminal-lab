@@ -1,7 +1,6 @@
 # Terminal-Based Digital Forensics Evidence Intake Tool
 
-This project is a terminal-driven digital evidence intake system designed for digital forensics labs. Initially created using Bash on AWS EC2, it has since been rebuilt in Python for local execution, improving compatibility, maintainability, and cross-platform scalability. It uses the AWS SDK (`boto3`) to upload files securely to an S3 bucket.
-
+This project is a local, Python-based mock digital forensics lab designed to streamline the intake, organization, integrity verification, and secure cloud upload of digital evidence. Initially developed using Bash on an EC2-hosted Linux environment, it has since been rebuilt in Python for local use on Windows-based systems using Visual Studio Code. The lab now leverages Python’s native libraries and the AWS boto3 SDK for secure, script-driven evidence handling — eliminating the need for cloud servers during development and reducing complexity and cost.
 ---
 
 ## 🚀 Features
